@@ -29,7 +29,7 @@ class UserLogin(UserBase):
 class UserInDB(UserBase):
     id: str
     name: str
-    password: str  # This will be the hashed password
+    password: str
     
     class Config:
         from_attributes = True

@@ -6,7 +6,6 @@ client = TestClient(app)
 
 class TestUserAPI:
     def test_register_valid_user(self):
-        """Test that a user with valid data can be registered via API"""
         response = client.post(
             "/api/register",
             json={
@@ -19,11 +18,10 @@ class TestUserAPI:
         data = response.json()
         assert data["email"] == "apitest@example.com"
         assert data["name"] == "API Test User"
-        assert "password" in data  # Password should be hashed, not plaintext
+        assert "password" in data
     
     def test_register_duplicate_email(self):
-        """Test that registering with an existing email returns an error"""
-        # Register a user first
+
         client.post(
             "/api/register",
             json={
@@ -33,7 +31,7 @@ class TestUserAPI:
             }
         )
         
-        # Try to register again with the same email
+
         response = client.post(
             "/api/register",
             json={
@@ -47,8 +45,7 @@ class TestUserAPI:
         assert "Email already registered" in response.text
     
     def test_login_valid_credentials(self):
-        """Test that login works with valid credentials"""
-        # Register a user first
+
         client.post(
             "/api/register",
             json={
@@ -73,8 +70,7 @@ class TestUserAPI:
         assert data["token_type"] == "bearer"
     
     def test_login_invalid_credentials(self):
-        """Test that login fails with invalid credentials"""
-        # Register a user first
+
         client.post(
             "/api/register",
             json={
@@ -97,8 +93,7 @@ class TestUserAPI:
         assert "Invalid credentials" in response.text
     
     def test_get_current_user(self):
-        """Test that the current user can be retrieved with a valid token"""
-        # Register a user first
+
         client.post(
             "/api/register",
             json={
